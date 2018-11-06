@@ -1,6 +1,9 @@
-.PHONY: up vagrant playbook smoketest test clean
+.PHONY: up setup vagrant playbook smoketest test clean
 
 up: vagrant playbook
+
+setup:
+	@vagrant plugin install vagrant-hostmanager
 
 vagrant:
 	@vagrant up
@@ -17,5 +20,4 @@ test:
 
 clean:
 	@vagrant destroy -f
-	@rm -rf kubernetes-resources
 	@[ ! -f ssh.config ] || rm ssh.config
