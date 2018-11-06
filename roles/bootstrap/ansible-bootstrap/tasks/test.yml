@@ -2,5 +2,5 @@
 ---
 
 - name: Test if Python is installed
-  command: ./bin/python --version
+  command: "{{ ansible_python_interpreter }} --version"
   changed_when: false

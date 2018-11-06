@@ -2,4 +2,4 @@
 ---
 
 # CoreOS python location
-ansible_python_interpreter: /home/core/bin/python
+ansible_python_interpreter: /opt/pypy/bin/pypy

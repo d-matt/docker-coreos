@@ -9,7 +9,7 @@ mkdir -p $(dirname $PYTHON_BINARY_PATH)
 
 cat > $PYTHON_BINARY_PATH <<EOF
 #!/bin/bash
-LD_LIBRARY_PATH=$PYPY_DIR/lib:$LD_LIBRARY_PATH exec $PYPY_DIR/bin/pypy "\$@"
+LD_LIBRARY_PATH=$PYPY_DIR/lib:$LD_LIBRARY_PATH exec $PYPY_DIR/bin/pypy3 "\$@"
 EOF
 
 chmod +x $PYTHON_BINARY_PATH
