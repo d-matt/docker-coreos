@@ -8,3 +8,13 @@
 - name: Install PyPy
   raw: docker run --rm -v /opt:/tmp/core_volume skopciewski/coreos-pypy
   when: python_install | failed
+
+- name: Ensure update-engine and locksmithd are disabled
+  become: yes
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  loop:
+    - update-engine
+    - locksmithd

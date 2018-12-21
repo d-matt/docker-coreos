@@ -21,7 +21,9 @@ Vagrant.configure("2") do |config|
 
   # Box management: CoreOS
   config.vm.box = "coreos-stable"
-  config.vm.box_url = "https://storage.googleapis.com/stable.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json"
+  #config.vm.box_url = "https://storage.googleapis.com/stable.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json"
+  config.vm.box_url = "https://storage.googleapis.com/stable.release.core-os.net/amd64-usr/1800.7.0/coreos_production_vagrant.json"
+  config.vm.box_version = "1800.7.0"
 
   # Swarm manager instances configuration
   (1..$swarm_manager_instances).each do |i|
