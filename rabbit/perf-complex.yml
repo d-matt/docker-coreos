@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  perf:
+    image: pivotalrabbitmq/perf-test:latest
+    networks:
+      - rabbit-net
+    command: "--uri amqp://rabbitmq --queue-pattern 'perf-test-%d' --queue-pattern-from 1 --queue-pattern-to 10 --producers 10 --consumers 30"
+
+networks:
+  rabbit-net:

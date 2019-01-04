@@ -1,0 +1,49 @@
+version: '3.6'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.7-alpine
+    user: 111:111
+    environment:
+      - RABBITMQ_NUM={{.Task.Slot}}
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+      - "5671:5671"
+    entrypoint: /bin/bash -c '[ $$RABBITMQ_NUM -gt 1 ] && sleep 30; docker-entrypoint.sh rabbitmq-server'
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 30s
+    networks:
+      - rabbit-net
+    volumes:
+      - ./conf/:/etc/rabbitmq/
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+    secrets:
+      - source: erlang_cookie
+        target: /var/lib/rabbitmq/.erlang.cookie
+        uid: "111"
+        gid: "111"
+        mode: 0600
+  consul:
+    image: consul
+    ports:
+      - "8500:8500"
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    networks:
+      - rabbit-net
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8500/v1/health/checks/consul"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+
+secrets:
+  erlang_cookie:
+    file: ./erlang.cookie
+networks:
+  rabbit-net:

@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  perf:
+    image: pivotalrabbitmq/perf-test:latest
+    networks:
+      - rabbit-net
+    command: '--producers 1 -y 2 -u "throughput-test-1" -a --id "test 1" --uri amqp://rabbitmq'
+
+networks:
+  rabbit-net:
