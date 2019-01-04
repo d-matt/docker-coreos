@@ -2,11 +2,11 @@
 # # vi: set ft=ruby :
 
 # General cluster configuration
-$swarm_manager_instances = 3
-$swarm_manager_instance_memory = 2048
+$swarm_manager_instances = 1
+$swarm_manager_instance_memory = 1024
 $swarm_manager_instance_cpus = 1
 $swarm_worker_instances = 3
-$swarm_worker_instance_memory = 2048
+$swarm_worker_instance_memory = 1024
 $swarm_worker_instance_cpus = 1
 
 Vagrant.configure("2") do |config|
@@ -38,6 +38,9 @@ Vagrant.configure("2") do |config|
 
       # IP
       master.vm.network :private_network, ip: "10.0.0.#{i+110}"
+
+      # FS
+      master.vm.synced_folder ".", "/vagrant", type: "rsync", id: "vagrant-root"
     end
   end
 
@@ -56,6 +59,9 @@ Vagrant.configure("2") do |config|
 
       # IP
       worker.vm.network :private_network, ip: "10.0.0.#{i+120}"
+
+      # FS
+      worker.vm.synced_folder ".", "/vagrant", type: "rsync", id: "vagrant-root"
     end
   end
 end
